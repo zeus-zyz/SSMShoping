@@ -10,6 +10,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 public class GeneratorTest {
+	
 	public static void main(String[] args) throws Exception {
 		List<String> warnings=new ArrayList<String>();
 		boolean overwrite=true;
