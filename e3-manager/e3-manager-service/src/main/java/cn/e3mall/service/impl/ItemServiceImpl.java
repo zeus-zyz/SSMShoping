@@ -24,17 +24,17 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public Item getItemById(long itemId) {
 		//根据主键查询
-		//Item item = itemMapper.selectByPrimaryKey(itemId);
-		ItemExample example = new ItemExample();
-		Criteria criteria = example.createCriteria();
+		Item item = itemMapper.selectByPrimaryKey(itemId);
+		//ItemExample example = new ItemExample();
+		//Criteria criteria = example.createCriteria();
 		//设置查询条件
-		criteria.andIdEqualTo(itemId);
+		//criteria.andIdEqualTo(itemId);
 		//执行查询
-		List<Item> list = itemMapper.selectByExample(example);
-		if(list != null && list.size() > 0){
+		//List<Item> list = itemMapper.selectByExample(example);
+		/*if(list != null && list.size() > 0){
 			return list.get(0);
-		}
-		return null;
+		}*/
+		return item;
 	}
 
 }
