@@ -24,11 +24,11 @@
       <property name ="trimStrings" value ="true"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage ="cn.e3mall.www.mapper" targetProject =".\src\main\java">
+    <sqlMapGenerator targetPackage ="cn.e3mall.mapper" targetProject =".\src\main\java">
       <property name ="enableSubPackages" value ="true"/>
     </sqlMapGenerator>
 	
-    <javaClientGenerator type ="XMLMAPPER" targetPackage="cn.e3mall.www.mapper" targetProject =".\src\main\java">
+    <javaClientGenerator type ="XMLMAPPER" targetPackage="cn.e3mall.mapper" targetProject =".\src\main\java">
       <property name ="enableSubPackages" value ="true"/>
     </javaClientGenerator>
  
