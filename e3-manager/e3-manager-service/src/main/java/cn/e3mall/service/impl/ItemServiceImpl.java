@@ -43,7 +43,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public EasyUIDataGridResult getItemList(int page, int rows) {
+	public EasyUIDataGridResult getItemsList(Integer page,Integer rows) {
 		//设置分页信息
 		PageHelper.startPage(page,rows);
 		//创建一个返回值对象

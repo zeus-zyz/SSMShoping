@@ -28,10 +28,10 @@ public class ItemController {
 		return item;
 	}
 	
-	@RequestMapping("/item/list")
+	@RequestMapping("item/list")
 	@ResponseBody
-	public EasyUIDataGridResult getItemList(Integer page, Integer rows){
-		EasyUIDataGridResult result = itemService.getItemList(page, rows);
-		return result;
+	private EasyUIDataGridResult getItemsList(int page,int rows){
+			EasyUIDataGridResult list = itemService.getItemsList(page, rows);
+		return list;
 	}
 }

@@ -1,9 +1,15 @@
 package cn.e3mall.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ItemCat {
-    private Long id;
+public class ItemCat implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2428841370509051058L;
+
+	private Long id;
 
     private Long parentId;
 

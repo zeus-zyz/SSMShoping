@@ -1,9 +1,15 @@
 package cn.e3mall.untils;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EasyUIDataGridResult {
+public class EasyUIDataGridResult implements Serializable {
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -391403931989056540L;
+
 	private Integer total;
 	
 	private List<?> rows;

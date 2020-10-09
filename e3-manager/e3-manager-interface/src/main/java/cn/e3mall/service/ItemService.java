@@ -7,5 +7,5 @@ public interface ItemService {
 	
 	Item getItemById(long itemId);
 	
-	EasyUIDataGridResult getItemList(int page,int rows);
+	EasyUIDataGridResult getItemsList(Integer page,Integer rows);
 }
