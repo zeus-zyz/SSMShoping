@@ -5,14 +5,20 @@ import java.util.List;
 
 public class EasyUIDataGridResult implements Serializable {
 		
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -391403931989056540L;
+	private static final long serialVersionUID = 8323047168654337079L;
 
 	private Integer total;
 	
 	private List<?> rows;
+	
+	public EasyUIDataGridResult() {
+		super();
+	}
 
 	public EasyUIDataGridResult(Integer total, List<?> rows) {
         this.total = total;
