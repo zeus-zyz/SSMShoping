@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.e3mall.common.pojo.EasyUITreeNode;
 import cn.e3mall.mapper.ItemCatMapper;
 import cn.e3mall.pojo.ItemCat;
 import cn.e3mall.pojo.ItemCatExample;
 import cn.e3mall.pojo.ItemCatExample.Criteria;
 import cn.e3mall.service.ItemCatService;
-import cn.e3mall.untils.EasyUITreeNode;
 @Service
 public class ItemCatServiceImpl implements ItemCatService {
 
