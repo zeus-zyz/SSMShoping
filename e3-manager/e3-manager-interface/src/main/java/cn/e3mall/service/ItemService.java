@@ -11,4 +11,14 @@ public interface ItemService {
 	EasyUIDataGridResult getItemsList(Integer page,Integer rows);
 	
 	E3Result addItem(Item item,String desc);
+	
+	E3Result updateItemReshelf(String ids);
+	
+	E3Result updateItemInstock(String ids);
+	
+	E3Result updateItemDel(String ids);
+	
+	E3Result getItemDesc(long ids);
+	
+	EasyUIDataGridResult getItemParamList(Integer page,Integer rows);
 }

@@ -62,4 +62,38 @@ public class ItemController {
 		return result;
 	}
 	
+	/**
+	 * 使商品下架
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("rest/item/instock")
+	@ResponseBody
+	public E3Result updateInstock(String ids){
+		E3Result result=itemService.updateItemInstock(ids);
+		return result;
+	}
+	/**
+	 * 使商品上架
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/rest/item/reshelf")
+	@ResponseBody
+	public E3Result updateItemReshelf(String ids){
+		E3Result result = itemService.updateItemReshelf(ids);
+		return result;
+	}
+	/**
+	 * 使商品为伪删除
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/rest/item/delete")
+	@ResponseBody
+	public E3Result updateItemdelete(String ids){
+		E3Result result = itemService.updateItemDel(ids);
+		return result;
+	}
+	
 }

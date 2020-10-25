@@ -6,6 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.untils.E3Result;
 import cn.e3mall.content.service.ContentService;
 import cn.e3mall.mapper.ContentMapper;
@@ -55,6 +59,20 @@ public class ContentServiceImpl implements ContentService{
 		//执行查询
 		List<Content> list = contentMapper.selectByExampleWithBLOBs(example);
 		return list;
+	}
+
+	@Override
+	public EasyUIDataGridResult getItemList(Long categoryId, Integer page, Integer rows) {
+		PageHelper.startPage(page, rows);
+		ContentExample example = new ContentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCategoryIdEqualTo(categoryId);
+		List<Content> list = contentMapper.selectByExample(example);
+		PageInfo<Content> pageInfo = new PageInfo<>(list);
+		EasyUIDataGridResult easyUIDataGridResult = new EasyUIDataGridResult();
+		easyUIDataGridResult.setRows(list);
+		easyUIDataGridResult.setTotal(pageInfo.getTotal());
+		return easyUIDataGridResult;
 	}
 
 }

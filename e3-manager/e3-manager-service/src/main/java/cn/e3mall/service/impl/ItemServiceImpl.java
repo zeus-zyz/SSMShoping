@@ -5,6 +5,7 @@ package cn.e3mall.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +102,108 @@ public class ItemServiceImpl implements ItemService {
 		itemDescMapper.insert(itemDesc);
 		//返回成功
 		return E3Result.ok();
+	}
+
+	/**
+	 * 使商品上架
+	 */
+	@Override
+	public E3Result updateItemReshelf(String ids) {
+		/*String[] strings = ids.split(",");
+		Long[] id=new Long[strings.length];
+		for(int i=0;i<strings.length;i++){
+			id[i]=Long.valueOf(i);
+		}
+		List<Long> list = Arrays.asList(id);
+		ItemExample example = new ItemExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andIdIn(list);
+		List<Item> lists = itemMapper.selectByExample(example);
+		Item item = new Item();
+		int rows=0;
+		for(int i=0;i<lists.size();i++){
+			item = lists.get(i);
+			item.setStatus((byte)1);
+			rows= itemMapper.updateByPrimaryKeySelective(item);
+		}
+		return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+		*/
+		if(StringUtils.isNoneBlank(ids)){
+			int rows=0;
+			if(ids.indexOf(",")<0){
+				String[] split = ids.split(",");
+				for (String id : split) {
+					Item item = itemMapper.selectByPrimaryKey(Long.valueOf(id));
+					item.setStatus((byte)1);
+					rows=itemMapper.updateByPrimaryKey(item);
+				}
+				return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+			}
+			Item item = itemMapper.selectByPrimaryKey(Long.valueOf(ids));
+			item.setStatus((byte)1);
+			rows=itemMapper.updateByPrimaryKey(item);
+			return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+		}
+		return null;
+	}
+
+	/**
+	 * 使商品下架
+	 */
+	@Override
+	public E3Result updateItemInstock(String ids) {
+		if(StringUtils.isNoneBlank(ids)){
+			int rows=0;
+			if(ids.indexOf(",")<0){
+				String[] split = ids.split(",");
+				for (String id : split) {
+					Item item = itemMapper.selectByPrimaryKey(Long.valueOf(id));
+					item.setStatus((byte)2);
+					rows=itemMapper.updateByPrimaryKey(item);
+				}
+				return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+			}
+			Item item = itemMapper.selectByPrimaryKey(Long.valueOf(ids));
+			item.setStatus((byte)1);
+			rows=itemMapper.updateByPrimaryKey(item);
+			return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+		}
+		return null;
+	}
+
+	/**
+	 * 使商品为伪删除状态
+	 */
+	@Override
+	public E3Result updateItemDel(String ids) {
+		if(StringUtils.isNoneBlank(ids)){
+			int rows=0;
+			if(ids.indexOf(",")<0){
+				String[] split = ids.split(",");
+				for (String id : split) {
+					Item item = itemMapper.selectByPrimaryKey(Long.valueOf(id));
+					item.setStatus((byte)3);
+					rows=itemMapper.updateByPrimaryKey(item);
+				}
+				return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+			}
+			Item item = itemMapper.selectByPrimaryKey(Long.valueOf(ids));
+			item.setStatus((byte)1);
+			rows=itemMapper.updateByPrimaryKey(item);
+			return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+		}
+		return null;
+	}
+
+	@Override
+	public E3Result getItemDesc(long ids) {
+		 return null;
+	}
+
+	@Override
+	public EasyUIDataGridResult getItemParamList(Integer page, Integer rows) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

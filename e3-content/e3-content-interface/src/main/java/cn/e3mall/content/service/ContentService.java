@@ -2,6 +2,7 @@ package cn.e3mall.content.service;
 
 import java.util.List;
 
+import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.untils.E3Result;
 import cn.e3mall.pojo.Content;
 
@@ -19,4 +20,6 @@ public interface ContentService {
 	E3Result addContent(Content content);
 	
 	List<Content> getContentListByCid(long cid);
+	
+	EasyUIDataGridResult getItemList(Long categoryId,Integer page,Integer rows);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.e3mall.common.pojo.EasyUITreeNode;
 import cn.e3mall.common.untils.E3Result;
@@ -25,6 +26,7 @@ import cn.e3mall.pojo.ContentCategoryExample.Criteria;
  * @date 2020年10月22日 下午9:52:19
  */
 @Service
+@Transactional
 public class ContentCategoryServiceImpl implements ContentCategoryService {
 
 	@Autowired
@@ -79,6 +81,40 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 		}
 		//返回结果，返回E3Result对象，包含contentCategory对象
 		return E3Result.ok(contentCategory);
+	}
+
+	@Override
+	public E3Result updateContentCategory(long id, String name) {
+		ContentCategory contentCategory = new ContentCategory();
+		contentCategory.setId(id);
+		contentCategory.setName(name);
+		contentCategory.setUpdated(new Date());
+		int row = contentCategoryMapper.updateByPrimaryKeySelective(contentCategory);
+		return row>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！");
+	}
+
+	@Override
+	public E3Result delContentCategory(long id) {
+		ContentCategory contentCategory = contentCategoryMapper.selectByPrimaryKey(id);
+		boolean flag=false;
+		if(contentCategory.getIsParent()){
+			flag=false;
+		}else{
+			contentCategoryMapper.deleteByPrimaryKey(id);
+			flag=true;
+		}
+		if(flag){
+			ContentCategoryExample example = new ContentCategoryExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentIdEqualTo(contentCategory.getParentId());
+			List<ContentCategory> list = contentCategoryMapper.selectByExample(example);
+			if(list.size()==0){
+				ContentCategory category = contentCategoryMapper.selectByPrimaryKey(contentCategory.getParentId());
+				category.setIsParent(false);
+				contentCategoryMapper.updateByPrimaryKey(category);
+			}
+		}
+		return E3Result.ok(flag);
 	}
 
 }
