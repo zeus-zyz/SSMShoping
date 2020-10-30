@@ -22,4 +22,8 @@ public interface ContentService {
 	List<Content> getContentListByCid(long cid);
 	
 	EasyUIDataGridResult getItemList(Long categoryId,Integer page,Integer rows);
+	
+	E3Result delContent(String ids);
+	
+	E3Result updateContent(Content content);
 }

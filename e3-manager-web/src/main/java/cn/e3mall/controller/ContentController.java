@@ -38,4 +38,18 @@ public class ContentController {
 	public EasyUIDataGridResult getItemList(Long categoryId,Integer page, Integer rows){
 		return contentService.getItemList(categoryId, page, rows);
 	}
+	
+	@RequestMapping("/content/delete")
+	@ResponseBody
+	public E3Result delContent(String ids){
+		E3Result result = contentService.delContent(ids);
+		return result;
+	}
+	
+	@RequestMapping("/rest/content/edit")
+	@ResponseBody
+	public E3Result updateContent(Content content){
+		E3Result result = contentService.updateContent(content);
+		return result;
+	}
 }

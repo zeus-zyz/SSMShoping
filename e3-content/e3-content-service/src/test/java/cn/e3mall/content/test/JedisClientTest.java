@@ -20,8 +20,10 @@ public class JedisClientTest {
 	public void testJedisClient(){
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-redis.xml");
 		JedisClient jedisClient = applicationContext.getBean(JedisClient.class);
-		jedisClient.set("mytest", "jedisClient");
-		String string = jedisClient.get("mytest");
-		System.out.println(string);
+		Long hdel = jedisClient.del("CONTENT_LIST");
+		System.out.println(hdel);
+		//jedisClient.set("mytest", "jedisClient");
+		//String string = jedisClient.get("mytest");
+		//System.out.println(string);
 	}
 }

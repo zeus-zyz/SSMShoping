@@ -19,6 +19,7 @@ import cn.e3mall.content.service.ContentService;
 import cn.e3mall.mapper.ContentMapper;
 import cn.e3mall.pojo.Content;
 import cn.e3mall.pojo.ContentExample;
+import cn.e3mall.pojo.Item;
 import cn.e3mall.pojo.ContentExample.Criteria;
 
 /**
@@ -39,7 +40,7 @@ public class ContentServiceImpl implements ContentService{
 	@Autowired
 	JedisClient jedisClient;
 	
-	@Value("")
+	@Value("${CONTENT_LIST}")
 	private String CONTENT_LIST;
 	
 	@Override
@@ -49,9 +50,8 @@ public class ContentServiceImpl implements ContentService{
 		content.setUpdated(new Date());
 		//保存到数据库
 		contentMapper.insert(content);
-		jedisClient.hdel(CONTENT_LIST, content.getCategoryId().toString());
-		
-		return E3Result.ok();
+		Long hdel = jedisClient.del(CONTENT_LIST);
+		return hdel<0 ? E3Result.ok("操作失败，请稍后再试！！") : E3Result.ok();
 	}
 
 	/**
@@ -99,6 +99,34 @@ public class ContentServiceImpl implements ContentService{
 		easyUIDataGridResult.setRows(list);
 		easyUIDataGridResult.setTotal(pageInfo.getTotal());
 		return easyUIDataGridResult;
+	}
+
+	@Override
+	public E3Result delContent(String ids) {
+		if(StringUtils.isNoneBlank(ids)){
+			int rows=0;
+			Long hdel=(long) 0;
+			if(ids.indexOf(",")<0){
+				String[] split = ids.split(",");
+				for (String id : split) {
+					
+						hdel = jedisClient.del(CONTENT_LIST);
+						rows = contentMapper.deleteByPrimaryKey(Long.valueOf(id));
+				}
+				return rows>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+			}
+				hdel = jedisClient.del(CONTENT_LIST);
+				rows = contentMapper.deleteByPrimaryKey(Long.valueOf(ids));
+			return rows<0 && hdel<0 ?  E3Result.ok("操作失败，请稍后再试！！") : E3Result.ok();
+		}
+		return null;
+	}
+
+	@Override
+	public E3Result updateContent(Content content) {
+		Long hdel = jedisClient.del(CONTENT_LIST);
+		int row = contentMapper.updateByPrimaryKeySelective(content);
+		return row<0 && hdel<0?  E3Result.ok("编辑失败") : E3Result.ok() ;
 	}
 
 }

@@ -31,6 +31,7 @@ public class PictureController {
 	@RequestMapping(value="/pic/upload",produces=MediaType.TEXT_PLAIN_VALUE+";charset=utf-8")
 	@ResponseBody
 	public String uplodFile(MultipartFile uploadFile){
+		Map result=new HashMap();
 		try{
 			//把图片上传到图片服务器
 			FastDFSClient fastDFSClient = new FastDFSClient("classpath:conf/client.conf");
@@ -38,17 +39,15 @@ public class PictureController {
 			String originalFilename = uploadFile.getOriginalFilename();
 			String extName = originalFilename.substring(originalFilename.lastIndexOf(".")+1);
 			//得到一个图片的地址和文件名
-			String url = fastDFSClient.uploadFile(uploadFile.getBytes(),extName);
+			String path = fastDFSClient.uploadFile(uploadFile.getBytes(),extName);
 			//补全完整的URL
-			url=IMAGE_SERVER_URL + url;
+			String url=IMAGE_SERVER_URL + path;
 			//封装到Map集合中并返回
-			Map result=new HashMap<>();
 			result.put("error", 0);
 			result.put("url", url);
 			return JsonUtils.objectTOJson(result);
 		}catch(Exception e){
 			e.printStackTrace();
-			Map result = new HashMap<>();
 			result.put("error", 1);
 			result.put("message", "图片上传失败");
 			return JsonUtils.objectTOJson(result);
