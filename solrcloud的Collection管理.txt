@@ -1,0 +1,4 @@
+创建新的Collection进行分片处理。
+http://47.97.24.99:8889/solr/admin/collections?action=CREATE&name=collection2&numShards=2&replicationFactor=2
+删除不用的Collection。
+http://47.97.24.99:8889/solr/admin/collections?action=DELETE&name=collection1

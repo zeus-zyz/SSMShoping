@@ -1,4 +1,4 @@
-package cn.e3mall.solrj.test;
+package cn.e3mall.test.solrj;
 
 import java.util.List;
 import java.util.Map;
