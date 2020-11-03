@@ -23,7 +23,7 @@ import cn.e3mall.pojo.ItemExample;
  */
 public class PageHelperTest {
  
-	@Test
+	//@Test
 	public void testPageHelper() throws Exception{
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-dao.xml");
 		ItemMapper itemMapper = applicationContext.getBean(ItemMapper.class);

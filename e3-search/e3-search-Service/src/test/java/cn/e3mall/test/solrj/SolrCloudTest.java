@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 public class SolrCloudTest {
   
-	@Test
+	//@Test
 	public void solrCloudAddDocument() throws Exception{
 		CloudSolrServer solrServer = new CloudSolrServer("47.97.24.99:2182,47.97.24.99:2183,47.97.24.99:2184");
 		solrServer.setDefaultCollection("collection1");
@@ -31,7 +31,7 @@ public class SolrCloudTest {
 		solrServer.commit();
 	}
 	
-	@Test
+	//@Test
 	public void queryDocument() throws Exception{
 		CloudSolrServer solrServer = new CloudSolrServer("47.97.24.99:2182,47.97.24.99:2183,47.97.24.99:2184");
 		solrServer.setDefaultCollection("collection1");

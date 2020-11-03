@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class SolrJTest {
 	
-	@Test
+	//@Test
 	public void addDocument()throws Exception{
 		//创建一个solrServer对象，创建一个连接，参数solr服务的url
 		HttpSolrServer solrServer = new HttpSolrServer("http://47.97.24.99:8888/solr/collection1");
@@ -39,7 +39,7 @@ public class SolrJTest {
 		solrServer.commit();
 	}
 	
-	@Test
+	//@Test
 	public void delDocument() throws Exception{
 		HttpSolrServer solrServer = new HttpSolrServer("http://47.97.24.99:8888/solr/collection1");
 		//删除文档
@@ -49,7 +49,7 @@ public class SolrJTest {
 		solrServer.commit();
 	}
 	
-	@Test
+	//@Test
 	public void queryIndex() throws Exception{
 		//创建一个solrServer对象
 		HttpSolrServer solrServer = new HttpSolrServer("http://47.97.24.99:8888/solr");
@@ -71,7 +71,7 @@ public class SolrJTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void queryIndexFuza() throws Exception{
 		HttpSolrServer solrServer = new HttpSolrServer("http://47.97.24.99:8888/solr");
 		//创建一个查询对象

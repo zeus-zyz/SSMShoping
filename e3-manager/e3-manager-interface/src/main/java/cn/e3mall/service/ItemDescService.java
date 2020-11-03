@@ -14,4 +14,5 @@ import cn.e3mall.common.untils.E3Result;
 public interface ItemDescService {
 
 	E3Result getItemDesc(long ids);
+	
 }

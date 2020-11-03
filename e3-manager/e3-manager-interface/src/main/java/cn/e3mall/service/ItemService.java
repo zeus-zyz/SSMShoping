@@ -3,6 +3,7 @@ package cn.e3mall.service;
 import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.untils.E3Result;
 import cn.e3mall.pojo.Item;
+import cn.e3mall.pojo.ItemDesc;
 
 public interface ItemService {
 	
@@ -18,7 +19,7 @@ public interface ItemService {
 	
 	E3Result updateItemDel(String ids);
 	
-	E3Result getItemDesc(long ids);
+	ItemDesc getItemDescById(Long itemId);
 	
 	EasyUIDataGridResult getItemParamList(Integer page,Integer rows);
 }

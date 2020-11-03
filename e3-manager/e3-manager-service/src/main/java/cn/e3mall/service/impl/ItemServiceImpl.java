@@ -5,21 +5,34 @@ package cn.e3mall.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.e3mall.common.jedis.JedisClient;
 import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.untils.E3Result;
 import cn.e3mall.common.untils.IDUtils;
+import cn.e3mall.common.untils.JsonUtils;
 import cn.e3mall.mapper.ItemDescMapper;
 import cn.e3mall.mapper.ItemMapper;
 import cn.e3mall.pojo.Item;
 import cn.e3mall.pojo.ItemDesc;
 import cn.e3mall.pojo.ItemExample;
+import cn.e3mall.pojo.ItemExample.Criteria;
 import cn.e3mall.service.ItemService;
 /**
  * 商品管理Service
@@ -35,22 +48,53 @@ public class ItemServiceImpl implements ItemService {
 	@Autowired
 	ItemDescMapper itemDescMapper;
 	
+	@Autowired
+	JmsTemplate jmsTemplate;
+	
+	@Resource
+	Destination topicDestination;
+	
+	@Autowired
+	JedisClient jedisClient;
+	
+	@Value("${REDIS_ITEM_PRE}")
+	private String REDIS_ITEM_PRE;
+	
+	@Value("${ITEM_CACHE_EXPIRE}")
+	private Integer ITEM_CACHE_EXPIRE;
+	
 	@Override
 	public Item getItemById(long itemId) {
+		//查询缓存
+		try{
+			String json = jedisClient.get(REDIS_ITEM_PRE+":"+itemId+":BASE");
+			if(StringUtils.isNotBlank(json)){
+				Item item = JsonUtils.jsonToPojo(json, Item.class);
+				return item;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		//根据主键查询
-		Item item = itemMapper.selectByPrimaryKey(itemId);
-		//ItemExample example = new ItemExample();
-		//Criteria criteria = example.createCriteria();
+		//Item item = itemMapper.selectByPrimaryKey(itemId);
+		ItemExample example = new ItemExample();
+		Criteria criteria = example.createCriteria();
 		//设置查询条件
-		//criteria.andIdEqualTo(itemId);
+		criteria.andIdEqualTo(itemId);
 		//执行查询
-		//List<Item> list = itemMapper.selectByExample(example);
-		/*
+		List<Item> list = itemMapper.selectByExample(example);
 		 if(list != null && list.size() > 0){
+			 try{
+				 jedisClient.set(REDIS_ITEM_PRE+":"+itemId+":BASE", JsonUtils.objectTOJson(list.get(0)));
+				 jedisClient.expire(REDIS_ITEM_PRE+":"+itemId+":BASE", ITEM_CACHE_EXPIRE);
+			 }catch(Exception e){
+				 e.printStackTrace();
+			 }
 			return list.get(0);
 		}
-		*/
-		return item;
+		
+		//return item;
+		 return null;
 	}
 
 	@Override
@@ -82,7 +126,7 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public E3Result addItem(Item item, String desc) {
 		// 生成商品id
-		long itemId = IDUtils.genItemId();
+		final long itemId = IDUtils.genItemId();
 		// 补全item的属性
 		item.setId(itemId);
 		// 添加商品的状态(1-正常 2-下架 3-删除)
@@ -100,6 +144,15 @@ public class ItemServiceImpl implements ItemService {
 		itemDesc.setUpdated(new Date());
 		//保存商品描述
 		itemDescMapper.insert(itemDesc);
+		//发送商品添加信息
+		jmsTemplate.send(topicDestination,new MessageCreator() {
+			
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				TextMessage message = session.createTextMessage(itemId+"");
+				return message;
+			}
+		});
 		//返回成功
 		return E3Result.ok();
 	}
@@ -196,14 +249,30 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public E3Result getItemDesc(long ids) {
-		 return null;
-	}
-
-	@Override
 	public EasyUIDataGridResult getItemParamList(Integer page, Integer rows) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ItemDesc getItemDescById(Long itemId) {
+		try{
+			String json = jedisClient.get(REDIS_ITEM_PRE+":"+itemId+":DESC");
+			if(StringUtils.isNotBlank(json)){
+			 ItemDesc itemDesc = JsonUtils.jsonToPojo(json, ItemDesc.class);
+				return itemDesc;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		ItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(itemId);
+		 try{
+			 jedisClient.set(REDIS_ITEM_PRE+":"+itemId+":DESC", JsonUtils.objectTOJson(itemDesc));
+			 jedisClient.expire(REDIS_ITEM_PRE+":"+itemId+":DESC", ITEM_CACHE_EXPIRE);
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }
+		return itemDesc;
 	}
 
 }

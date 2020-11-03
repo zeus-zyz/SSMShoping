@@ -34,7 +34,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</bean>
 	<!-- 这个队列的目的地，一对多的 -->
 	<bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="topic"/>
+		<!-- <constructor-arg value="topic"/> -->
+		<constructor-arg value="itemAddTopic"/> 
 	</bean>
 	<!-- 接收消息 -->
 	<!-- 配置监听器 -->
@@ -44,5 +45,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<property name="connectionFactory" ref="connectionFactory"/>
 		<property name="destination" ref="queueDestination"/>
 		<property name="messageListener" ref="myMessageListener"/>
+	</bean>
+	<!-- 监听商品添加消息，同步到索引库 -->
+	<bean id="itemAddMessageListener" class="cn.e3mall.search.message.ItemAddMessageListener"/>
+	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="destination" ref="topicDestination"/>
+		<property name="messageListener" ref="itemAddMessageListener"/>
 	</bean>
 </beans>

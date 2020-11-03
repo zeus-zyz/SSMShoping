@@ -25,7 +25,7 @@ import org.junit.Test;
  */
 public class ActiveMqTest {
 
-	@Test
+	//@Test
 	public void testQueueProducer() throws Exception{
 		//创建connectionFactory对象，需要指定服务端ip机端口号
 		//brokerURL 服务器的IP机端口号
@@ -55,7 +55,7 @@ public class ActiveMqTest {
 		connection.close();
 	}
 	
-	@Test
+	//@Test
 	public void testQueueConsumer() throws Exception{
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://47.97.24.99:61616");
 		Connection connection = connectionFactory.createConnection();
@@ -90,7 +90,7 @@ public class ActiveMqTest {
 		connection.close();
 	}
 	
-	@Test
+	//@Test
 	public void testTopicProducer() throws Exception{
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://47.97.24.99:61616");
 		Connection connection = connectionFactory.createConnection();
@@ -109,7 +109,7 @@ public class ActiveMqTest {
 		connection.close();
 	}
 	
-	@Test
+	//@Test
 	public void testTopicConsumer() throws Exception{
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://47.97.24.99:61616");
 		Connection connection = connectionFactory.createConnection();

@@ -16,4 +16,6 @@ import cn.e3mall.common.pojo.SearchItem;
 public interface ItemSearchMapper {
 
 	List<SearchItem> getItemList();
+	
+	SearchItem getItemById(long itemId);
 }

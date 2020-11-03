@@ -22,7 +22,7 @@ import org.springframework.jms.core.MessageCreator;
  */
 public class ActiveMqSpring {
 	
-	@Test
+	//@Test
 	public void testQueueProducer()throws Exception{
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-activemq.xml");
 		JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);

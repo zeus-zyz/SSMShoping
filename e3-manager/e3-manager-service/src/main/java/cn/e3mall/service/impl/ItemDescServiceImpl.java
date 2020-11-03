@@ -37,4 +37,5 @@ public class ItemDescServiceImpl implements ItemDescService {
 		return E3Result.ok(itemDesc);
 	}
 
+
 }
