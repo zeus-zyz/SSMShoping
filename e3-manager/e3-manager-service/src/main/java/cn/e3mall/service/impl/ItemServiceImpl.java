@@ -250,8 +250,18 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public EasyUIDataGridResult getItemParamList(Integer page, Integer rows) {
-		// TODO Auto-generated method stub
-		return null;
+		//设置分页信息
+		PageHelper.startPage(page, rows);
+		//执行查询
+		ItemExample example = new ItemExample();
+		List<Item> items = itemMapper.selectByExample(example);
+		//取分页信息
+		PageInfo<Item> pageInfo = new PageInfo<>(items);
+		//创建返回结果对象
+		EasyUIDataGridResult result = new EasyUIDataGridResult();
+		result.setTotal(pageInfo.getTotal());
+		result.setRows(items);
+		return result;
 	}
 
 	@Override
@@ -273,6 +283,12 @@ public class ItemServiceImpl implements ItemService {
 			 e.printStackTrace();
 		 }
 		return itemDesc;
+	}
+
+	@Override
+	public Item queryItemById(Long id) {
+		Item item = itemMapper.selectByPrimaryKey(id);
+		return item;
 	}
 
 }

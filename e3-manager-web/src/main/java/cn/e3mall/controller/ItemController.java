@@ -96,4 +96,19 @@ public class ItemController {
 		return result;
 	}
 	
+	/**
+	 * 
+	* @Title: queryById 
+	* @Description: 异步重新加载商品信息
+	* @param id
+	* @return Item
+	* @author Administrator
+	* @date 2020年11月8日下午2:31:26
+	 */
+	@RequestMapping("/rest/item/param/item/query/{id}")
+	@ResponseBody
+	public Item queryById(@PathVariable Long id){
+		Item item = itemService.queryItemById(id);
+		return item;
+	}
 }

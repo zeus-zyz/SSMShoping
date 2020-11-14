@@ -22,4 +22,6 @@ public interface ItemService {
 	ItemDesc getItemDescById(Long itemId);
 	
 	EasyUIDataGridResult getItemParamList(Integer page,Integer rows);
+
+	Item queryItemById(Long id);
 }

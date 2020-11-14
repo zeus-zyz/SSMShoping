@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.e3mall.common.pojo.EasyUIDataGridResult;
 import cn.e3mall.common.pojo.EasyUITreeNode;
 import cn.e3mall.service.ItemCatService;
 
@@ -29,4 +30,12 @@ public class ItemCatController {
 		List<EasyUITreeNode> list = itemCatService.getCatList(parentId);
 		return list;
 	}
+	
+	/*@RequestMapping("/item/param/list")
+	@ResponseBody
+	private EasyUIDataGridResult getItemCatList(int page,int rows){
+		//查询商品信息
+		 EasyUIDataGridResult list = itemCatService.getItemCatList(page, rows);
+		return list;
+	}*/
 }

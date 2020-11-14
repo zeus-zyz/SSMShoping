@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.e3mall.common.untils.E3Result;
+import cn.e3mall.common.untils.JsonUtils;
 import cn.e3mall.mapper.ItemDescMapper;
 import cn.e3mall.pojo.ItemDesc;
 import cn.e3mall.pojo.ItemDescExample;
@@ -35,6 +36,21 @@ public class ItemDescServiceImpl implements ItemDescService {
 		List<ItemDesc> list = itemDescMapper.selectByExample(example);
 		ItemDesc itemDesc = list.get(0);
 		return E3Result.ok(itemDesc);
+	}
+
+	@Override
+	public ItemDesc selectItemDesc(Long id) {
+		ItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(id);
+		return itemDesc;
+	}
+
+	@Override
+	public E3Result queryItemDesc(Long id) {
+		ItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(id);
+		if(itemDesc.equals("")){
+			E3Result.build(400, "该商品没有描述！");
+		}
+		return E3Result.build(200,JsonUtils.objectTOJson(itemDesc));
 	}
 
 

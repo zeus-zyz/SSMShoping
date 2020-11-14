@@ -1,6 +1,7 @@
 package cn.e3mall.service;
 
 import cn.e3mall.common.untils.E3Result;
+import cn.e3mall.pojo.ItemDesc;
 
 /**
  * @Description:
@@ -14,5 +15,8 @@ import cn.e3mall.common.untils.E3Result;
 public interface ItemDescService {
 
 	E3Result getItemDesc(long ids);
+
+	ItemDesc selectItemDesc(Long id);
 	
+	E3Result queryItemDesc(Long id);
 }
