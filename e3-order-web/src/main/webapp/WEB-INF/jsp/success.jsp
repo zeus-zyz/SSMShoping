@@ -30,7 +30,7 @@
             <span class="pay_word1">
                 <i class="payOkicon"></i>订单提交成功，请您及时付款，以便尽快为您发货~
             </span>
-            <span class="pay_word2">请您在提交订单后 <em>4小时</em> 内完成支付，超时订单会自动取消。    订单号：${orderId }</span>
+            <span class="pay_word2">请您在提交订单后 <em>4小时</em> 内完成支付，超时订单会自动取消。    订单号：${orderID }</span>
         </div>
         <span class="pay_Rmoney">应付金额 : <em class="pay_price">￥
         <fmt:formatNumber value="${payment}" maxFractionDigits="2" minFractionDigits="2" groupingUsed="true"/>

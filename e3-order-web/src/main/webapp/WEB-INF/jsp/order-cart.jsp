@@ -30,7 +30,6 @@
 <jsp:include page="commons/header.jsp" />
 <div class="orderMain">
 <form id="orderForm" class="hide" action="/order/create.html" method="post">
-	<input type="hidden" name="payment" value="<fmt:formatNumber groupingUsed="false" maxFractionDigits="2" minFractionDigits="2" value="${totalPrice/100 }"/>"/>
 	<input type="hidden" name="paymentType" value="2"/>
 	<input type="hidden" name="postFee" value="10"/>
 	<c:forEach items="${cartList }" var="cart" varStatus="status">
@@ -97,7 +96,7 @@
     </div>
   </div>
   <div class="orderTbody" style="width:958px;border-bottom:0 none;">
-  <div class="backToCart"><a style=" text-decoration:underline;" target="" href="http://localhost:8090/cart/cart.html">返回修改购物车</a></div>
+  <div class="backToCart"><a style=" text-decoration:underline;" target="" href="/cart/index/">返回修改购物车</a></div>
   <h3 class="orderTitle">商品信息：</h3>
   <span class="clear"></span>
   <div class="orderPItem">
