@@ -3,7 +3,7 @@ package cn.e3mall.sso.service;
 import cn.e3mall.common.untils.E3Result;
 
 /**
- * @Description:
+ * @Description:根据token查询用户信息
  * @version 1.0
  * @since 
  * @author Administrator

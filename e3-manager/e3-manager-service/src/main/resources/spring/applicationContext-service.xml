@@ -24,4 +24,5 @@
 	<dubbo:service interface="cn.e3mall.service.ItemService" ref="itemServiceImpl" timeout="600000"/>
 	<dubbo:service interface="cn.e3mall.service.ItemCatService" ref="itemCatServiceImpl" timeout="600000"/>
 	<dubbo:service interface="cn.e3mall.service.ItemDescService" ref="itemDescServiceImpl" timeout="600000"/>
+	<dubbo:service interface="cn.e3mall.service.ItemParamService" ref="itemParamServiceImpl" timeout="600000"/>
 </beans>

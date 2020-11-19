@@ -98,7 +98,7 @@ public class ItemController {
 	
 	/**
 	 * 
-	* @Title: queryById 
+	* @Title: queryById     
 	* @Description: 异步重新加载商品信息
 	* @param id
 	* @return Item
@@ -110,5 +110,21 @@ public class ItemController {
 	public Item queryById(@PathVariable Long id){
 		Item item = itemService.queryItemById(id);
 		return item;
+	}
+	
+	/**
+	 * 
+	* @Title: updateItem 
+	* @Description: 商品更新 
+	* @param item
+	* @return E3Result
+	* @author Administrator
+	* @date 2020年11月14日下午10:20:09
+	 */
+	@RequestMapping("/rest/item/update")
+	@ResponseBody
+	public E3Result updateItem(Item item){
+		E3Result result=itemService.updateItem(item);
+		return result;
 	}
 }

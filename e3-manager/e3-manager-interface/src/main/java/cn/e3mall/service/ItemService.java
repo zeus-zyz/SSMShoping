@@ -24,4 +24,6 @@ public interface ItemService {
 	EasyUIDataGridResult getItemParamList(Integer page,Integer rows);
 
 	Item queryItemById(Long id);
+
+	E3Result updateItem(Item item);
 }

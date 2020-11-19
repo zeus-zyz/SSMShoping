@@ -291,4 +291,10 @@ public class ItemServiceImpl implements ItemService {
 		return item;
 	}
 
+	@Override
+	public E3Result updateItem(Item item) {
+		int row = itemMapper.updateByPrimaryKeySelective(item);
+		return row>0 ? E3Result.ok() : E3Result.ok("操作失败，请稍后再试！！");
+	}
+
 }

@@ -31,7 +31,9 @@
 		<!-- 设定默认编码 -->
 		<property name="defaultEncoding" value="UTF-8"></property>
 		<!-- 设定文件上传的最大值5MB，5*1024*1024 -->
-		<property name="maxUploadSize" value="5242880"></property>
+		<!-- <property name="maxUploadSize" value="5242880"></property> -->
+		<property name="maxUploadSize" value="104857600"></property>
+		
 	</bean>
 	
 	<!-- 引用dubbo服务 -->
@@ -43,4 +45,5 @@
 	<dubbo:reference interface="cn.e3mall.content.service.ContentService" id="contentService"/>
 	<dubbo:reference interface="cn.e3mall.content.service.ContentCategoryService"  id="contentCategoryService"/>
 	<dubbo:reference interface="cn.e3mall.search.service.SearchItemService"  id="searchItemService"/>
+	<dubbo:reference interface="cn.e3mall.service.ItemParamService"  id="itemParamService"/>
 </beans>

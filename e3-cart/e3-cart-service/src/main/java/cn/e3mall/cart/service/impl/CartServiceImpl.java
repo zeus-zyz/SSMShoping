@@ -46,36 +46,39 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public E3Result addCart(long userId, long itemId, int num) {
-		//向redis中添加购物车
-		//数据类型是hash key:用户ID field: 商品id value:商品信息
-		//判断商品是否存在
-		Boolean hexists = jedisClient.hexists(REDIS_CART_PRE+":"+userId, itemId+"");
-		//如果存在数量相加
-		if(hexists){
-			String json = jedisClient.hget(REDIS_CART_PRE+":"+userId, itemId+"");
-			//把json转换item对象
-			Item item = JsonUtils.jsonToPojo(json, Item.class);
-			item.setNum(item.getNum() +num);
-			//写入redis中
-			jedisClient.hset(REDIS_CART_PRE+":"+userId, itemId+"", JsonUtils.objectTOJson(json));
-			return E3Result.ok();
-		}
-		//如果不存在，根据商品id去商品信息
-		Item item = itemMapper.selectByPrimaryKey(itemId);
-		//设置购物车数据量
-		item.setNum(num);
-		//去一张图片
-		String image = item.getImage();
-		if(StringUtils.isNoneBlank(image)){
-			item.setImage(image.split(",")[0]);
-		}
-		//添加到购物车列表
-		jedisClient.hset(REDIS_CART_PRE+":"+userId, itemId+"", JsonUtils.objectTOJson(item));
-		return E3Result.ok();
+		//向redis中添加购物车。
+				//数据类型是hash key：用户id field：商品id value：商品信息
+				//判断商品是否存在
+				Boolean hexists = jedisClient.hexists(REDIS_CART_PRE + ":" + userId, itemId + "");
+				//如果存在数量相加
+				if (hexists) {
+					String json = jedisClient.hget(REDIS_CART_PRE + ":" + userId, itemId + "");
+					//把json转换成TbItem
+					Item item = JsonUtils.jsonToPojo(json, Item.class);
+					System.out.println(num);
+					System.out.println(item.getNum());
+					item.setNum(item.getNum() + num);
+					//写回redis
+					jedisClient.hset(REDIS_CART_PRE + ":" + userId, itemId + "", JsonUtils.objectTOJson(item));
+					return E3Result.ok();
+				}
+				//如果不存在，根据商品id取商品信息
+				Item item = itemMapper.selectByPrimaryKey(itemId);
+				//设置购物车数据量
+				item.setNum(num);
+				//取一张图片
+				String image = item.getImage();
+				if (StringUtils.isNotBlank(image)) {
+					item.setImage(image.split(",")[0]);
+				}
+				//添加到购物车列表
+				jedisClient.hset(REDIS_CART_PRE + ":" + userId, itemId + "", JsonUtils.objectTOJson(item));
+				return E3Result.ok();
 	}
 
 	@Override
 	public E3Result mergeCart(long userId, List<Item> itemList) {
+		
 		//遍历商品列表
 		//把列表添加到购物车
 		//判断购物车中是否有此商品
@@ -121,6 +124,13 @@ public class CartServiceImpl implements CartService {
 	public E3Result delCartItem(long userId, long itemId) {
 		//删除购物车商品
 		jedisClient.hdel(REDIS_CART_PRE+":"+userId, itemId+"");
+		return E3Result.ok();
+	}
+
+	@Override
+	public E3Result clearCartItem(long userId) {
+		//删除购物车信息
+		jedisClient.del(REDIS_CART_PRE+":"+userId);
 		return E3Result.ok();
 	}
 
