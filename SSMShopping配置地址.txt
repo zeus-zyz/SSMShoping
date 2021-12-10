@@ -3,3 +3,7 @@ redis-club 192.168.25.105
 zookeeper  192.168.25.103
 mysql 192.168.25.102
 ActiveMQ 192.168.25.106
+FastDFS 192.168.25.107
+solr-single 192.168.25.108
+solr-club 192.168.25.109
+
