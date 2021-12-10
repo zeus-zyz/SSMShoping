@@ -1,0 +1,5 @@
+redis-single 192.168.25.104
+redis-club 192.168.25.105
+zookeeper  192.168.25.103
+mysql 192.168.25.102
+ActiveMQ 192.168.25.106
